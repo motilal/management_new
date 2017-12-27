@@ -6,7 +6,7 @@
                 <h3 class="box-title"><?php echo isset($pageHeading) ? $pageHeading : '&nbsp;'; ?></h3>
                 <div class="box-tools pull-right">
                     <div class="btn-group" data-toggle="btn-toggle">
-                        <a href="<?php echo site_url('admin/users/add_subadmin'); ?>" class="btn btn-primary btn-sm add_new_item"><i class="fa fa-plus"></i> Add New SubAdmin </a>
+                        <a href="<?php echo site_url('admin/subadmins/add'); ?>" class="btn btn-primary btn-sm add_new_item"><i class="fa fa-plus"></i> Add New SubAdmin </a>
                     </div>
                 </div>
             </div>  

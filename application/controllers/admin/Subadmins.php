@@ -6,7 +6,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Users extends CI_Controller {
+class Subadmins extends CI_Controller {
 
     var $viewData = array();
     var $per_page = DEFAULT_PAGING;
@@ -20,7 +20,7 @@ class Users extends CI_Controller {
         $this->viewData['pageModule'] = 'SubAdmin Manager';
     }
 
-    public function subadmins() {
+    public function index() {
         $condition = array('grp.id' => '3');
         if ($this->input->is_ajax_request()) {
             $orderColomn = array(1 => 'first_name', 2 => 'email', 3 => 'phone', 4 => 'created_on', 5 => 'active');
@@ -31,7 +31,7 @@ class Users extends CI_Controller {
             }
             $result = $this->user->get_list($condition, $params->limit, $params->order, TRUE);
             if ($result->data->num_rows() > 0) {
-                $response['data'] = $this->showSubAdminTableData($result->data->result());
+                $response['data'] = $this->showTableData($result->data->result());
             } else {
                 $response['data'] = array();
             }
@@ -42,16 +42,16 @@ class Users extends CI_Controller {
 
         $result = $this->user->get_list($condition, array('start' => 0, 'limit' => $this->per_page), '', TRUE);
         if ($result->data->num_rows() > 0) {
-            $this->viewData['result'] = $this->showSubAdminTableData($result->data->result());
+            $this->viewData['result'] = $this->showTableData($result->data->result());
         }
         $this->viewData['title'] = "Sub Admin list";
         $this->viewData['datatable_asset'] = true;
         $this->viewData['pageHeading'] = 'SubAdmin Listing';
-        $this->viewData['breadcrumb'] = array('SubAdmin Manager' => 'admin/users/subadmins', $this->viewData['title'] => '');
-        $this->layout->view("admin/user/subadmins", $this->viewData);
+        $this->viewData['breadcrumb'] = array('SubAdmin Manager' => 'admin/subadmins', $this->viewData['title'] => '');
+        $this->layout->view("admin/subadmin/index", $this->viewData);
     }
 
-    public function showSubAdminTableData($data) {
+    public function showTableData($data) {
         $resultData = array();
         if ($data != "") {
             foreach ($data as $key => $row) {
@@ -61,9 +61,9 @@ class Users extends CI_Controller {
                 $rowData[2] = $row->email;
                 $rowData[3] = $row->phone;
                 $rowData[4] = date(DATE_FORMATE, $row->created_on);
-                $rowData[5] = $this->layout->element('admin/element/_module_status', array('status' => $row->active, 'id' => $row->id, 'url' => "admin/users/changestatus_subadmin"), true);
-                $editUrl = 'admin/users/edit_subadmin/' . $row->id;
-                $deleteUrl = 'admin/users/delete_subadmin';
+                $rowData[5] = $this->layout->element('admin/element/_module_status', array('status' => $row->active, 'id' => $row->id, 'url' => "admin/subadmins/changestatus"), true);
+                $editUrl = 'admin/subadmins/edit/' . $row->id;
+                $deleteUrl = 'admin/subadmins/delete';
                 $rowData[6] = $this->layout->element('admin/element/_module_action', array('id' => $row->id, 'editUrl' => $editUrl, 'deleteUrl' => $deleteUrl), true);
                 $resultData[] = $rowData;
             }
@@ -71,7 +71,7 @@ class Users extends CI_Controller {
         return $resultData;
     }
 
-    public function add_subadmin() {
+    public function add() {
         $this->load->library('form_validation');
         if ($this->form_validation->run('add_subadmins') === TRUE) {
             $username = NULL;
@@ -85,15 +85,15 @@ class Users extends CI_Controller {
             $group = array('3');
             $this->ion_auth->register($username, $password, $email, $additional_data, $group);
             $this->session->set_flashdata("success", getLangText('EventAddSuccess'));
-            redirect("admin/users/subadmins");
+            redirect("admin/subadmins");
         }
         $this->viewData['title'] = "Add SubAdmin";
         $this->viewData['pageHeading'] = $this->viewData['title'];
-        $this->viewData['breadcrumb'] = array('Event Manager' => 'admin/users/subadmins', $this->viewData['title'] => '');
-        $this->layout->view("admin/user/add_subadmin", $this->viewData);
+        $this->viewData['breadcrumb'] = array('Event Manager' => 'admin/subadmins', $this->viewData['title'] => '');
+        $this->layout->view("admin/subadmin/add", $this->viewData);
     }
 
-    public function edit_subadmin($id = null) {
+    public function edit($id = null) {
         $this->load->library('form_validation');
         if ($this->form_validation->run('edit_subadmins') === TRUE) {
             $data = array(
@@ -106,7 +106,7 @@ class Users extends CI_Controller {
             }
             $this->ion_auth->update($id, $data);
             $this->session->set_flashdata("success", getLangText('EventAddSuccess'));
-            redirect("admin/users/subadmins");
+            redirect("admin/subadmins");
         }
         $this->viewData['data'] = $data = $this->ion_auth->user($id)->row();
         if (empty($data)) {
@@ -114,11 +114,11 @@ class Users extends CI_Controller {
         }
         $this->viewData['title'] = "Edit SubAdmin";
         $this->viewData['pageHeading'] = $this->viewData['title'];
-        $this->viewData['breadcrumb'] = array('SubAdmin Manager' => 'admin/users/subadmins', $this->viewData['title'] => '');
-        $this->layout->view("admin/user/edit_subadmin", $this->viewData);
+        $this->viewData['breadcrumb'] = array('SubAdmin Manager' => 'admin/subadmins', $this->viewData['title'] => '');
+        $this->layout->view("admin/subadmin/edit", $this->viewData);
     }
 
-    public function delete_subadmin() {
+    public function delete() {
         $response = array();
         if ($this->input->is_ajax_request()) {
             $id = $this->input->post('id');
@@ -131,7 +131,7 @@ class Users extends CI_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
-    public function changestatus_subadmin() {
+    public function changestatus() {
         $response = array();
         if ($this->input->is_ajax_request()) {
             $id = $this->input->post('id');

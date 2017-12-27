@@ -2,9 +2,9 @@
 $segment_cntr = $this->uri->segment(2);
 $segment_fun = $this->uri->segment(3);
 
-$userIndex = ($segment_cntr == 'users' && ($segment_fun == 'subadmins' || $segment_fun == '')) ? 'active' : '';
-$userAdd = ($segment_cntr == 'users' && $segment_fun == 'manage') ? 'active' : '';
- 
+$subadminIndex = ($segment_cntr == 'subadmins' && ($segment_fun == 'index' || $segment_fun == '')) ? 'active' : '';
+$subadminAdd = ($segment_cntr == 'subadmins' && $segment_fun == 'add') ? 'active' : '';
+
 $pageIndex = ($segment_cntr == 'pages' && ($segment_fun == 'index' || $segment_fun == '')) ? 'active' : '';
 $pageAdd = ($segment_cntr == 'pages' && $segment_fun == 'manage') ? 'active' : '';
 
@@ -46,16 +46,17 @@ $settingProfile = ($segment_cntr == 'settings' && $segment_fun == 'profile') ? '
                 </a>
             </li>
 
-            <li class="treeview <?php echo $segment_cntr == 'users' ? 'active menu-open' : ''; ?>">
+            <li class="treeview <?php echo $segment_cntr == 'subadmins' ? 'active menu-open' : ''; ?>">
                 <a href="#">
-                    <i class="fa fa-user"></i>
-                    <span>User Manager</span>
+                    <i class="fa fa-user-secret"></i>
+                    <span>SubAdmin Manager</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
-                <ul class="treeview-menu" style="display:<?php echo $segment_cntr == 'users' ? 'block' : 'none'; ?>;">
-                    <li class="<?php echo $userIndex; ?>"><a href="<?php echo site_url('admin/users/subadmins'); ?>"><i class="fa fa-user-secret"></i> Manage SubAdmins</a></li>
+                <ul class="treeview-menu" style="display:<?php echo $segment_cntr == 'subadmins' ? 'block' : 'none'; ?>;">
+                    <li class="<?php echo $subadminIndex; ?>"><a href="<?php echo site_url('admin/subadmins'); ?>"><i class="fa fa-th-list"></i> Manage SubAdmins</a></li>
+                    <li class="<?php echo $subadminAdd; ?>"><a href="<?php echo site_url('admin/subadmins/add'); ?>"><i class="fa fa-plus"></i> Add New SubAdmins</a></li> 
                 </ul>
             </li>
 
