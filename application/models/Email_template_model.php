@@ -21,7 +21,7 @@ class Email_template_model extends CI_Model {
     }
 
     public function getById($id) {
-        if (is_integer($id) && $id > 0) {
+        if (is_numeric($id) && $id > 0) {
             $result = $this->db->select("email_templates.*")
                     ->get_where("email_templates", array("id" => $id));
             return $result->num_rows() > 0 ? $result->row() : null;

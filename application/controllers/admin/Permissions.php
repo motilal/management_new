@@ -6,7 +6,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Pages extends CI_Controller {
+class Permissions extends CI_Controller {
 
     var $viewData = array();
 
@@ -15,19 +15,19 @@ class Pages extends CI_Controller {
         $this->site_santry->redirect = "admin";
         $this->site_santry->allow(array());
         $this->layout->set_layout("admin/layout/layout_admin");
-        $this->load->model(array("page_model" => 'page'));
+        $this->load->model(array("permission_model" => 'permission'));
     }
 
     public function index() {
         $condition = array();
-        $result = $this->page->get_list($condition);
+        $result = $this->permission->get_list($condition);
         $this->viewData['result'] = $result;
-        $this->viewData['title'] = "Manage Page";
+        $this->viewData['title'] = "Manage Permission";
         $this->viewData['datatable_asset'] = true;
-        $this->viewData['pageModule'] = 'Page Manager';
-        $this->viewData['pageHeading'] = 'Static Pages';
-        $this->viewData['breadcrumb'] = array('Page Manager' => '');
-        $this->layout->view("admin/page/index", $this->viewData);
+        $this->viewData['pageModule'] = 'Permission Manager';
+        $this->viewData['pageHeading'] = 'Permission List';
+        $this->viewData['breadcrumb'] = array('Permission Manager' => '');
+        $this->layout->view("admin/permission/index", $this->viewData);
     }
 
     public function manage($id = null) {
@@ -35,48 +35,40 @@ class Pages extends CI_Controller {
         $this->form_validation->set_rules('manage');
         if ($this->form_validation->run() === TRUE) {
             $data = array(
-                "title" => $this->input->post('title'),
-                "description" => $this->input->post('description', false),
-                "meta_keywords" => $this->input->post("meta_keywords"),
-                "meta_description" => $this->input->post("meta_description")
+                "key" => $this->input->post('key'),
+                "name" => $this->input->post('name'),
+                "group" => $this->input->post("group"),
+                "order" => (int) $this->input->post("order")
             );
-            if ($id > 0) {
-                $data['slug'] = create_unique_slug($this->input->post('title'), 'pages', 'slug', 'id', $id);
-            } else {
-                $data['slug'] = create_unique_slug($this->input->post('title'), 'pages', 'slug');
-            }
             if ($this->input->post('id') > 0) {
-                $data['update'] = date("Y-m-d H:i:s");
-                $this->db->update("pages", $data, array("id" => $this->input->post('id')));
-                $this->session->set_flashdata("success", getLangText('PageUpdateSuccess'));
+                $this->db->update("permissions", $data, array("id" => $this->input->post('id')));
+                $this->session->set_flashdata("success", 'Permission added Successfully.');
             } else {
-                $data['created'] = date("Y-m-d H:i:s");
-                $this->db->insert("pages", $data);
-                $this->session->set_flashdata("success", getLangText('PageAddSuccess'));
+                $this->db->insert("permissions", $data);
+                $this->session->set_flashdata("success", 'Permission updated Successfully.');
             }
-            redirect("admin/pages");
+            redirect("admin/permissions");
         }
-        $this->viewData['title'] = "Add Static Page";
+        $this->viewData['title'] = "Add Permission";
         if ($id > 0) {
-            $this->viewData['data'] = $data = $this->page->getById($id);
+            $this->viewData['data'] = $data = $this->permission->getById($id);
             if (empty($data)) {
                 $this->session->set_flashdata("error", getLangText('LinkExpired'));
-                redirect('admin/pages');
+                redirect('admin/permissions');
             }
-            $this->viewData['title'] = "Edit Static Page";
+            $this->viewData['title'] = "Edit Permission";
         }
-        $this->viewData['ckeditor_asset'] = true;
-        $this->viewData['pageModule'] = 'Add New Page';
-        $this->viewData['breadcrumb'] = array('Page Manager' => 'admin/pages', $this->viewData['title'] => '');
-        $this->layout->view("admin/page/manage", $this->viewData);
+        $this->viewData['pageModule'] = 'Add New Permission';
+        $this->viewData['breadcrumb'] = array('Permission Manager' => 'admin/permissions', $this->viewData['title'] => '');
+        $this->layout->view("admin/permission/manage", $this->viewData);
     }
 
     public function delete() {
         $response = array();
         if ($this->input->is_ajax_request()) {
             $id = $this->input->post('id');
-            if ($id > 0 && $this->db->where("id", $id)->delete("pages")) {
-                $response['success'] = 'Page deleted successfully.';
+            if ($id > 0 && $this->db->where("id", $id)->delete("permissions")) {
+                $response['success'] = 'Permission deleted successfully.';
             } else {
                 $response['error'] = 'Invalid request';
             }

@@ -173,6 +173,28 @@ $config = array(
             'label' => 'Confrim Password',
             'rules' => "trim|matches[password]"
         )
+    ),
+    'permissions/manage' => array(
+        array(
+            'field' => 'name',
+            'label' => 'Name',
+            'rules' => "trim|required|max_length[255]"
+        ),
+        array(
+            'field' => 'key',
+            'label' => 'Key',
+            'rules' => "trim|required|max_length[255]"
+        ),
+        array(
+            'field' => 'group',
+            'label' => 'group',
+            'rules' => "trim|required|max_length[255]"
+        ),
+        array(
+            'field' => 'order',
+            'label' => 'Order',
+            'rules' => "trim|max_length[11]"
+        )
     )
 );
 $config['error_prefix'] = '<div class="help-block">';

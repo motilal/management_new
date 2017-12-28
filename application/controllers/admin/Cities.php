@@ -109,7 +109,7 @@ class Cities extends CI_Controller {
                 $response['msg'] = getLangText('CityAddSuccess');
                 $response['mode'] = 'add';
             }
-            $detail = $this->city->getById((int) $resource_id, $join = true);
+            $detail = $this->city->getById($resource_id, $join = true);
             $detail->statusButtons = $this->layout->element('admin/element/_module_status', array('status' => $detail->status, 'id' => $detail->id, 'url' => "admin/cities/changestatus"), true);
             $detail->actionButtons = $this->layout->element('admin/element/_module_action', array('id' => $detail->id, 'editUrl' => 'admin/cities/manage', 'deleteUrl' => 'admin/cities/delete'), true);
             $response['data'] = $detail;

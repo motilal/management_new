@@ -10,11 +10,11 @@ $(document).ready(function () {
 
     if (SUCCESS_NOTIFICATION != "" && SUCCESS_NOTIFICATION != "null") { 
         showMessage('success', {message: SUCCESS_NOTIFICATION});
-    } else if (ERROR_NOTIFICATION != "" && SUCCESS_NOTIFICATION != "null") {
+    } else if (ERROR_NOTIFICATION != "" && ERROR_NOTIFICATION != "null") {
         showMessage('error', {message: ERROR_NOTIFICATION});
-    } else if (WARNING_NOTIFICATION != "" && SUCCESS_NOTIFICATION != "null") {
+    } else if (WARNING_NOTIFICATION != "" && WARNING_NOTIFICATION != "null") {
         showMessage('warning', {message: WARNING_NOTIFICATION});
-    } else if (INFO_NOTIFICATION != "" && SUCCESS_NOTIFICATION != "null") {
+    } else if (INFO_NOTIFICATION != "" && INFO_NOTIFICATION != "null") {
         showMessage('info', {message: INFO_NOTIFICATION});
     }
 

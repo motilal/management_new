@@ -65,7 +65,7 @@ class Countries extends CI_Controller {
                 $response['msg'] = getLangText('CountryAddSuccess');
                 $response['mode'] = 'add';
             }
-            $detail = $this->country->getById((int) $resource_id);
+            $detail = $this->country->getById($resource_id);
             $detail->statusButtons = $this->layout->element('admin/element/_module_status', array('status' => $detail->status, 'id' => $detail->id, 'url' => "admin/countries/changestatus"), true);
             $detail->actionButtons = $this->layout->element('admin/element/_module_action', array('id' => $detail->id, 'editUrl' => 'admin/countries/manage', 'deleteUrl' => 'admin/countries/delete'), true);
             $response['data'] = $detail;

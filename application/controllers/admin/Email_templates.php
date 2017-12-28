@@ -31,7 +31,7 @@ class Email_templates extends CI_Controller {
     }
 
     public function view($id = null) {
-        $this->viewData['data'] = $data = $this->email_template->getById((int) $id);
+        $this->viewData['data'] = $data = $this->email_template->getById($id);
         if (empty($data)) {
             show_404();
         }
@@ -69,7 +69,7 @@ class Email_templates extends CI_Controller {
         }
         $this->viewData['title'] = "Add Email Template";
         if ($id > 0) {
-            $this->viewData['data'] = $data = $this->email_template->getById((int) $id);
+            $this->viewData['data'] = $data = $this->email_template->getById($id);
             if (empty($data)) {
                 $this->session->set_flashdata("error", getLangText('LinkExpired'));
                 redirect('admin/email_templates');

@@ -38,8 +38,7 @@ class City_model extends CI_Model {
     }
 
     public function getById($id, $join = false) {
-        if (is_integer($id) && $id > 0) {
-
+        if (is_numeric($id) && $id > 0) { 
             if ($join) {
                 $this->db->select("cities.*,states.name as state_name,countries.name as country_name");
             } else {

@@ -113,7 +113,7 @@ class Events extends CI_Controller {
         }
         $this->viewData['title'] = "Add Event";
         if ($id > 0) {
-            $this->viewData['data'] = $data = $this->event->getById((int) $id);
+            $this->viewData['data'] = $data = $this->event->getById($id);
             if (empty($data)) {
                 $this->session->set_flashdata("error", getLangText('LinkExpired'));
                 redirect('admin/events');

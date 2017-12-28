@@ -28,9 +28,9 @@ class States extends CI_Controller {
         if ($this->input->get('download') == 'report') {
             $result = $this->state->get_list($condition);
             $csv_array[] = array('name' => 'Name', 'short_name' => 'Short Name', 'country' => 'Country', 'status' => 'Status');
-            foreach ($result->result() as $row) { 
+            foreach ($result->result() as $row) {
                 $this->load->helper('csv');
-                $csv_array[] = array('name' => $row->name, 'short_name' => $row->short_name,'country' => $row->country_name, 'status' => $row->status == 1 ? 'Active' : 'InActive');
+                $csv_array[] = array('name' => $row->name, 'short_name' => $row->short_name, 'country' => $row->country_name, 'status' => $row->status == 1 ? 'Active' : 'InActive');
             }
             $Today = date('dmY');
             array_to_csv($csv_array, "StateListing_$Today.csv");
@@ -110,7 +110,7 @@ class States extends CI_Controller {
                 $response['msg'] = getLangText('StateAddSuccess');
                 $response['mode'] = 'add';
             }
-            $detail = $this->state->getById((int) $resource_id, $join = true);
+            $detail = $this->state->getById($resource_id, $join = true);
             $detail->statusButtons = $this->layout->element('admin/element/_module_status', array('status' => $detail->status, 'id' => $detail->id, 'url' => "admin/states/changestatus"), true);
             $detail->actionButtons = $this->layout->element('admin/element/_module_action', array('id' => $detail->id, 'editUrl' => 'admin/states/manage', 'deleteUrl' => 'admin/states/delete'), true);
             $response['data'] = $detail;

@@ -1,5 +1,6 @@
-<?php 
-/* 
+<?php
+
+/*
  * @author Motilal Soni
  */
 if (!defined('BASEPATH'))
@@ -24,7 +25,7 @@ class Country_model extends CI_Model {
     }
 
     public function getById($id) {
-        if (is_integer($id) && $id > 0) {
+        if (is_numeric($id) && $id > 0) {
             $result = $this->db->select("countries.*")
                     ->get_where("countries", array("id" => $id));
             return $result->num_rows() > 0 ? $result->row() : null;
