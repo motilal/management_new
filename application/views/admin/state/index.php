@@ -69,7 +69,7 @@
                         ?> 
                         <div class="form-group">
                             <label class="control-label" for="country_id">Select Country <em>*</em></label>
-                            <?php echo form_dropdown('country_id', $country_options, '', 'class="form-control select2" id="country" style="width:100%;"'); ?> 
+                            <?php echo form_dropdown('country_id', $country_options, '', 'class="form-control select2dropdown" id="country" style="width:100%;"'); ?> 
                         </div>
 
                         <div class="form-group">
