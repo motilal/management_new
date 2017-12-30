@@ -48,7 +48,7 @@
     <!-- /.col -->
 </div> 
 
-<script>
+<script type="text/javascript">
     /*
      params 
      1 sorting remove from colomns
