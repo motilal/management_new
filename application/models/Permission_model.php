@@ -1,5 +1,6 @@
-<?php 
-/** 
+<?php
+
+/**
  * @author Motilal Soni
  */
 if (!defined('BASEPATH'))
@@ -27,7 +28,21 @@ class Permission_model extends CI_Model {
             return $result->num_rows() > 0 ? $result->row() : null;
         }
         return false;
-    } 
+    }
+
+    public function group_options() {
+        $sql = $this->db->select('DISTINCT(`group`) as name')->get('permissions');
+        if ($sql->num_rows() > 0) {
+            $array = array();
+            foreach ($sql->result() as $row) {
+                $array[$row->name] = $row->name; 
+            }
+            return $array;
+        } else {
+            return false;
+        }
+    }
+
 }
 
 ?>

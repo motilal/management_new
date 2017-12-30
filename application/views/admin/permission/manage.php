@@ -8,13 +8,8 @@
                     <?php echo form_open(null, array("id" => "manage-form", "method" => "post")); ?>
                     <div class="col-lg-4">
                         <div class="form-group <?php echo!empty(form_error('group')) ? 'has-error' : ''; ?>">
-                            <label class="control-label" for="group">Group</label>
-                            <?php //echo form_input("group", set_value("group", isset($data->group) ? $data->group : "", false), "id='group' class='form-control'"); ?>
-                            <select class="form-control" id="group">
-                                <option selected="selected" value="1">orange</option>
-                                <option value="2">white</option>
-                                <option value="3">purple</option>
-                            </select>
+                            <label class="control-label" for="group">Group</label> 
+                            <?php echo form_dropdown('group', $group_options, set_value("group", isset($data->group) ? $data->group : "", false), 'class="form-control" id="group" style="width:100%;"'); ?> 
                             <?php echo form_error('group'); ?>
                         </div>
                     </div> 
@@ -65,6 +60,6 @@
 
 <script type="text/javascript">
     $("#group").select2({
-        tags: false
+        tags: true
     });
 </script>

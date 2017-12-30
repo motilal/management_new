@@ -6,7 +6,7 @@ $(document).ready(function () {
     $("#notification_pop").click(function () {
         hideAllMessages();
     });
-    $('.select2').select2();
+    $('.select2dropdown').select2();
 
     if (SUCCESS_NOTIFICATION != "" && SUCCESS_NOTIFICATION != "null") { 
         showMessage('success', {message: SUCCESS_NOTIFICATION});

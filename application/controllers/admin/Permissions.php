@@ -42,10 +42,10 @@ class Permissions extends CI_Controller {
             );
             if ($this->input->post('id') > 0) {
                 $this->db->update("permissions", $data, array("id" => $this->input->post('id')));
-                $this->session->set_flashdata("success", 'Permission added Successfully.');
+                $this->session->set_flashdata("success", 'Permission updated Successfully.');
             } else {
                 $this->db->insert("permissions", $data);
-                $this->session->set_flashdata("success", 'Permission updated Successfully.');
+                $this->session->set_flashdata("success", 'Permission added Successfully.');
             }
             redirect("admin/permissions");
         }
@@ -60,6 +60,7 @@ class Permissions extends CI_Controller {
         }
         $this->viewData['pageModule'] = 'Add New Permission';
         $this->viewData['breadcrumb'] = array('Permission Manager' => 'admin/permissions', $this->viewData['title'] => '');
+        $this->viewData['group_options'] = $this->permission->group_options(); 
         $this->layout->view("admin/permission/manage", $this->viewData);
     }
 
@@ -76,22 +77,19 @@ class Permissions extends CI_Controller {
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }
 
-    public function changestatus() {
-        $response = array();
-        if ($this->input->is_ajax_request()) {
-            $id = $this->input->post('id');
-            $status = $this->input->post('status');
-            $pageaction = '';
-            if ($status == "1") {
-                $this->db->where("id", $id)->update("pages", array("status" => 0));
-                $pageaction = 'Inactive';
-            } else if ($status == "0") {
-                $this->db->where("id", $id)->update("pages", array("status" => 1));
-                $pageaction = 'Active';
-            }
-            $response['success'] = "Page $pageaction Successfully.";
+    function _validate_permission_key($str) {
+        $id = $this->input->post('id');
+        $condition = array('key' => $str);
+        if (!empty($id) && is_numeric($id)) {
+            $condition['id !='] = $id;
         }
-        $this->output->set_content_type('application/json')->set_output(json_encode($response));
+        $num_row = $this->db->where($condition)->count_all_results('permissions');
+        if ($num_row >= 1) {
+            $this->form_validation->set_message('_validate_permission_key', 'Permission key already exist.');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
     }
 
 }

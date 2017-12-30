@@ -183,7 +183,7 @@ $config = array(
         array(
             'field' => 'key',
             'label' => 'Key',
-            'rules' => "trim|required|max_length[255]"
+            'rules' => "trim|required|max_length[255]|callback__validate_permission_key"
         ),
         array(
             'field' => 'group',
