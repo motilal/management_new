@@ -9,7 +9,12 @@
                     <div class="col-lg-4">
                         <div class="form-group <?php echo!empty(form_error('group')) ? 'has-error' : ''; ?>">
                             <label class="control-label" for="group">Group</label>
-                            <?php echo form_input("group", set_value("group", isset($data->group) ? $data->group : "", false), "id='group' class='form-control'"); ?>
+                            <?php //echo form_input("group", set_value("group", isset($data->group) ? $data->group : "", false), "id='group' class='form-control'"); ?>
+                            <select class="form-control" id="group">
+                                <option selected="selected" value="1">orange</option>
+                                <option value="2">white</option>
+                                <option value="3">purple</option>
+                            </select>
                             <?php echo form_error('group'); ?>
                         </div>
                     </div> 
@@ -42,7 +47,6 @@
 
 
                     <div class="col-lg-12">
-
                         <?php echo form_hidden('id', set_value('id', isset($data->id) ? $data->id : "")); ?>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="button" class="btn btn-default" onclick="window.location.href = '<?php echo site_url("admin/permissions"); ?>'">Cancel</button>
@@ -58,3 +62,9 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->  
+
+<script type="text/javascript">
+    $("#group").select2({
+        tags: false
+    });
+</script>
