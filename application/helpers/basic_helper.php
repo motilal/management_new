@@ -118,3 +118,94 @@ if (!function_exists('validateDate')) {
     }
 
 }
+
+if (!function_exists('arrayGrouping')) {
+
+    function arrayGrouping($array = array(), $field = "") {
+        if (empty($array)) {
+            return false;
+        }
+        $p_group = array();
+        foreach ($array as $row) {
+            if (!in_array($row->$field, $p_group))
+                $p_group[] = $row->$field;
+        }
+        $p_group1 = array();
+        foreach ($p_group as $grp) {
+            foreach ($array as $row) {
+                if ($row->$field == $grp) {
+                    $p_group1[$grp][] = $row;
+                }
+            }
+        }
+        return $p_group1;
+    }
+
+}
+
+
+if (!function_exists('is_allow_admin')) {
+
+    function is_allow_admin($redirect = true) {
+        $CI = & get_instance();
+        if ($CI->ion_auth->is_admin()) {
+            return true;
+        } else {
+            if ($redirect) {
+                $CI->session->set_flashdata("error", 'You dont have permission.');
+                redirect('admin/dashboard');
+            }
+            return false;
+        }
+    }
+
+}
+
+
+if (!function_exists('is_allow_action')) {
+
+    function is_allow_action($key = "") {
+        $CI = & get_instance();
+        if ($CI->ion_auth->is_admin()) {
+            return TRUE;
+        }
+        $useractions = $CI->session->userdata('_subadmin_allow_actions');
+        if (!empty($useractions) && in_array($key, $useractions)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+}
+
+
+if (!function_exists('is_allow_module')) {
+
+    function is_allow_module($group = "") {
+        $CI = & get_instance();
+        if ($CI->ion_auth->is_admin()) {
+            return TRUE;
+        }
+        $usermodule = $CI->session->userdata('_subadmin_allow_module');
+        if (!empty($usermodule) && in_array($group, $usermodule)) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+}
+if (!function_exists('gravatar_url')) {
+
+    function gravatar_url($email = "", $size = 160) {
+        $default = base_url('asset/admin/images/theme/no-user.jpg');
+        if (ENV_HOST == 'localhost') {
+            return $default;
+        }
+        $grav_url = "https://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "?d=" . urlencode($default) . "&s=" . $size;
+        return $grav_url;
+    }
+
+}
+

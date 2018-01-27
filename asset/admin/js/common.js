@@ -1,14 +1,14 @@
 $(document).ready(function () {
     $(document).ajaxStart(function () {
         Pace.restart();
-    });
+    });  
     $("#notification_pop").show();
     $("#notification_pop").click(function () {
         hideAllMessages();
     });
     $('.select2dropdown').select2();
 
-    if (SUCCESS_NOTIFICATION != "" && SUCCESS_NOTIFICATION != "null") { 
+    if (SUCCESS_NOTIFICATION != "" && SUCCESS_NOTIFICATION != "null") {
         showMessage('success', {message: SUCCESS_NOTIFICATION});
     } else if (ERROR_NOTIFICATION != "" && ERROR_NOTIFICATION != "null") {
         showMessage('error', {message: ERROR_NOTIFICATION});

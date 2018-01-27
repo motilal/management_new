@@ -23,6 +23,7 @@ class Events extends CI_Controller {
     }
 
     public function index() {
+        $this->acl->has_permission('event-index');
         $condition = array();
         if ($this->input->get('download') == 'report') {
             $result = $this->event->get_list($condition);
@@ -86,6 +87,15 @@ class Events extends CI_Controller {
     public function manage($id = null) {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('manage');
+        $this->viewData['title'] = "Add Event";
+        if ($id > 0) {
+            $this->viewData['data'] = $data = $this->event->getById($id);
+            if (empty($data)) {
+                $this->session->set_flashdata("error", getLangText('LinkExpired'));
+                redirect('admin/events');
+            }
+            $this->viewData['title'] = "Edit Event";
+        }
         if ($this->form_validation->run() === TRUE) {
             $start_date = date('Y-m-d H:i:s', strtotime($this->input->post('start_date')));
             $end_date = date('Y-m-d H:i:s', strtotime($this->input->post('end_date')));
@@ -110,15 +120,6 @@ class Events extends CI_Controller {
                 $this->session->set_flashdata("success", getLangText('EventAddSuccess'));
             }
             redirect("admin/events");
-        }
-        $this->viewData['title'] = "Add Event";
-        if ($id > 0) {
-            $this->viewData['data'] = $data = $this->event->getById($id);
-            if (empty($data)) {
-                $this->session->set_flashdata("error", getLangText('LinkExpired'));
-                redirect('admin/events');
-            }
-            $this->viewData['title'] = "Edit Event";
         }
         $this->viewData['ckeditor_asset'] = true;
         $this->viewData['datetimepicker_asset'] = true;

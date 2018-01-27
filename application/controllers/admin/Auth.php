@@ -12,7 +12,7 @@ class Auth extends CI_Controller {
         $this->site_santry->redirect = "admin";
         $this->site_santry->allow(array("login", "logout"));
         $this->load->library(array('ion_auth', 'form_validation'));
-        $this->load->helper(array('language')); 
+        $this->load->helper(array('language'));
     }
 
     public function login() {
@@ -26,6 +26,7 @@ class Auth extends CI_Controller {
 
             if ($this->form_validation->run() == TRUE) {
                 if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'))) {
+                    $this->getSubadminPermission();
                     redirect($this->input->post('request') ? $this->input->post('request') : "/admin/dashboard/?auth=verify");
                 } else {
                     $this->session->set_flashdata('login_error', $this->ion_auth->errors());
@@ -41,6 +42,28 @@ class Auth extends CI_Controller {
     public function logout() {
         $logout = $this->ion_auth->logout();
         redirect('admin', 'refresh');
+    }
+
+    function getSubadminPermission() {
+        if ($this->ion_auth->is_subadmin() === TRUE) {
+            $this->load->model(array('user_model' => 'user')); 
+            $user_id = $this->ion_auth->get_user_id();
+            $upkeys = $this->user->get_userpermission_keys(array('user_id' => $user_id));
+            if ($upkeys) {
+                $actions = array();
+                $group = array();
+                foreach ($upkeys as $ukey) {
+                    $actions[] = $ukey->key;
+                    $group[] = $ukey->group;
+                }
+                if (!empty($group)) {
+                    $group = array_unique($group);
+                    $group = array_map('strtolower', $group);
+                } 
+                $this->session->set_userdata('_subadmin_allow_actions', $actions);
+                $this->session->set_userdata('_subadmin_allow_module', $group);
+            }
+        }
     }
 
 }

@@ -2,7 +2,7 @@
     <div class="col-xs-12"> 
         <div class="box">
             <div class="box-header">
-                <i class="fa fa-calendar"></i> 
+                <i class="fa fa-user-secret"></i> 
                 <h3 class="box-title"><?php echo isset($pageHeading) ? $pageHeading : '&nbsp;'; ?></h3>
                 <div class="box-tools pull-right">
                     <div class="btn-group" data-toggle="btn-toggle">
@@ -21,7 +21,7 @@
                             <th>Phone</th>
                             <th>Created</th>
                             <th>Status</th>
-                            <th width="10%">Action</th>
+                            <th width="12%">Action</th>
                         </tr>
                     </thead>
                     <tbody>

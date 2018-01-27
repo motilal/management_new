@@ -23,8 +23,8 @@
         <![endif]--> 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">  
 
-        <script type="text/javascript">window.paceOptions = {ajax: true, startOnPageLoad: false};</script>
-        <script src="<?php echo base_url('asset/admin/plugin/pace/pace.min.js'); ?>"></script> 
+        <script type="text/javascript">window.paceOptions = {ajax: true, startOnPageLoad: true};</script>
+        <script src="<?php echo base_url('asset/admin/plugin/pace/pace.min.js'); ?>"></script>  
         <script src="<?php echo base_url('asset/admin/js/jquery.min.js'); ?>"></script> 
         <script src="<?php echo base_url('asset/admin/plugin/bootstrape/js/bootstrap.min.js'); ?>"></script>  
         <script src="<?php echo base_url('asset/admin/js/fastclick.js'); ?>"></script>  
@@ -36,18 +36,18 @@
             <script type="text/javascript" src="<?php echo base_url("asset/admin/plugin/ckeditor/ckeditor.js") ?>"></script>
             <script type="text/javascript" src="<?php echo base_url("asset/admin/plugin/ckfinder/ckfinder.js") ?>"></script>
             <script type="text/javascript">
-            $(function () {
-                $('textarea.editor').each(function (e) {
-                    CKEDITOR.replace(this.id, {
-                        filebrowserBrowseUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/ckfinder.html'); ?>',
-                        filebrowserImageBrowseUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/ckfinder.html?type=Images'); ?>',
-                        filebrowserFlashBrowseUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/ckfinder.html?type=Flash'); ?>',
-                        filebrowserUploadUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files'); ?>',
-                        filebrowserImageUploadUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images'); ?>',
-                        filebrowserFlashUploadUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images'); ?>'
+                $(function () {
+                    $('textarea.editor').each(function (e) {
+                        CKEDITOR.replace(this.id, {
+                            filebrowserBrowseUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/ckfinder.html'); ?>',
+                            filebrowserImageBrowseUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/ckfinder.html?type=Images'); ?>',
+                            filebrowserFlashBrowseUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/ckfinder.html?type=Flash'); ?>',
+                            filebrowserUploadUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files'); ?>',
+                            filebrowserImageUploadUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images'); ?>',
+                            filebrowserFlashUploadUrl: '<?php echo base_url('asset/admin/plugin/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images'); ?>'
+                        });
                     });
                 });
-            });
             </script>
         <?php } ?>
 
@@ -72,9 +72,27 @@
         <script src="<?php echo base_url('asset/admin/js/common.js'); ?>"></script>   
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
+        <div class="page-loader-wrapper" style="display: none;">
+            <div class="loader">
+                <div class="preloader">
+                    <div class="spinner-layer pl-blue">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+                <p>Please wait...</p>
+            </div>
+        </div>
         <?php echo sanitize_output($this->layout->element('admin/element/_info_msg_element', $this->_ci_cached_vars, true)); ?>
         <div class="wrapper">
-
+            <?php
+            global $UserInfo;
+            $UserInfo = $this->ion_auth->user()->row(); 
+            ?>
             <header class="main-header">
                 <!-- Logo -->
                 <a href="<?php echo site_url('admin/dashboard'); ?>" class="logo">
@@ -96,16 +114,16 @@
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="<?php echo base_url('asset/admin/images/theme/user2-160x160.jpg'); ?>" class="user-image" alt="User Image">
-                                    <span class="hidden-xs">Motilal Soni</span>
+                                    <img src="<?php echo gravatar_url($UserInfo->email); ?>" class="user-image" alt="User Image">
+                                    <span class="hidden-xs"><?php echo $UserInfo->first_name . ' ' . $UserInfo->last_name ?></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="<?php echo base_url('asset/admin/images/theme/user2-160x160.jpg'); ?>" class="img-circle" alt="User Image">
+                                        <img src="<?php echo gravatar_url($UserInfo->email); ?>" class="img-circle" alt="User Image">
                                         <p>
-                                            Motilal Soni - Web Developer
-                                            <small>Member since Nov. 2017</small>
+                                            <?php echo $UserInfo->first_name . ' ' . $UserInfo->last_name ?> - <?php echo $this->ion_auth->is_subadmin() ? 'Sub Admin' : 'Administrator'; ?>
+                                            <small>Member since <?php echo date('M. Y',$UserInfo->created_on); ?></small>
                                         </p>
                                     </li>                                      
                                     <!-- Menu Footer-->

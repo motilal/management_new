@@ -19,8 +19,7 @@ class Site_santry {
      * @param type $params 
      */
     public function __construct($params = array()) {
-        $this->ci_obj = & get_instance();
-        $this->ci_obj->load->library('ion_auth');
+        $this->ci_obj = & get_instance(); 
     }
 
     /**
@@ -29,12 +28,12 @@ class Site_santry {
      * @return boolean
      */
     public function allow($actions = array()) {
-        //pr($this->ci_obj->uri->rsegments[2]);
+
         if (!in_array($this->ci_obj->uri->rsegments[2], $actions) && $this->ci_obj->ion_auth->logged_in() == FALSE) {
             redirect($this->redirect . "?request=" . base64_encode(uri_string() . "?" . $_SERVER['QUERY_STRING']));
         }
         if (isset($this->ci_obj->uri->segments[1]) && $this->ci_obj->uri->segments[1] == "admin") {
-            if ($this->ci_obj->ion_auth->is_admin() === FALSE && !in_array($this->ci_obj->uri->rsegments[2], $actions)) {
+            if ($this->ci_obj->ion_auth->is_admin() === FALSE && $this->ci_obj->ion_auth->is_subadmin() === FALSE && !in_array($this->ci_obj->uri->rsegments[2], $actions)) {
                 redirect($this->redirect . "?request=" . base64_encode(uri_string() . "?" . $_SERVER['QUERY_STRING']));
             }
         }

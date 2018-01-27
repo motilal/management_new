@@ -10,7 +10,7 @@ class Dashboard extends CI_Controller {
         parent::__construct();
         $this->site_santry->redirect = "admin";
         $this->site_santry->allow();
-        $this->layout->set_layout("admin/layout/layout_admin");
+        $this->layout->set_layout("admin/layout/layout_admin"); 
     }
 
     public function index($flag = "") {

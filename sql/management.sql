@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2017 at 04:57 PM
+-- Generation Time: Jan 27, 2018 at 12:51 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -41890,7 +41890,7 @@ INSERT INTO `email_templates` (`id`, `title`, `subject`, `slug`, `body`, `variab
 (3, 'Resend activation mail', 'account activation', 'resend-activation-mail', '<p>Hi ~name~,</p>\r\n\r\n<p>You have successfully registered on MTGOStock.</p>\r\n\r\n<p>Please <a href=\"~site_url~\">click here</a> to activate your mtgo account</p>\r\n\r\n<p>Thank you</p>', NULL, '2015-09-28 12:48:39', '2016-03-02 18:09:21', 1),
 (4, 'Forgot Password', 'forgot password', 'admin-forgot-password', '<p>Hi ~name~,</p>\r\n\r\n<p>Your password is reset successfully, please click here to create new password.</p>\r\n\r\n<p>Please <a href=\"~site_url~\">click here</a> to create new password.</p>\r\n\r\n<p>Thank you</p>', '{{dsfsdfsf}},{{sdfsf}}', '2015-09-28 17:37:15', '2016-03-03 18:01:00', 0),
 (5, 'Order email', 'Order placed successfully', 'order-email', '<p>Hi ~name~,</p>\r\n\r\n<p>You have purchase ~gallery_title~</p>\r\n\r\n<p>You have been succefully placed your order your tanrsaction id is ~transaction_id~.</p>\r\n\r\n<p>Please click here to download <a href=\"~download_link~\">click here</a>Download.</p>\r\n\r\n<p>Thank you</p>', NULL, '2015-09-28 17:37:15', '2016-03-03 17:51:58', 1),
-(6, 'testn', 'sdfds', 'testn', '<p>sdfsddsasddas</p>', NULL, '2016-03-03 12:22:20', '2016-03-03 17:52:27', 0);
+(6, 'testn', 'sdfds', 'testn', '<p>sdfsddsasddas</p>', NULL, '2016-03-03 12:22:20', '2016-03-03 17:52:27', 1);
 
 -- --------------------------------------------------------
 
@@ -41925,7 +41925,7 @@ INSERT INTO `events` (`id`, `title`, `slug`, `description`, `start_date`, `end_d
 (38, 'SDF', 'sdf-1', '<p>SDFS</p>', '2017-12-23 15:13:00', '2017-12-24 15:13:00', '2017-12-23 10:43:40', NULL, 1),
 (39, 'SDFS', 'sdfs', '<p>SDF</p>', '2017-12-28 15:13:00', '2017-12-29 15:13:00', '2017-12-23 10:43:52', NULL, 0),
 (40, 'sdfsd', 'sdfsd', '<p>SDSF</p>', '2017-12-12 15:13:00', '2017-12-26 15:14:00', '2017-12-23 10:44:04', NULL, 1),
-(41, 'SDFS', 'sdfs-1', '<p>SDFS</p>', '2017-12-21 15:14:00', '2017-12-31 15:14:00', '2017-12-23 10:44:15', NULL, 0),
+(41, 'SDFS', 'sdfs-1', '<p>SDFS</p>', '2017-12-21 15:14:00', '2017-12-31 15:14:00', '2017-12-23 10:44:15', NULL, 1),
 (42, 'Term $ # &', 'term', '<p>sdfsdf</p>', '2017-12-19 19:29:00', '2017-12-28 19:29:00', '2017-12-23 14:59:54', NULL, 1);
 
 -- --------------------------------------------------------
@@ -41950,9 +41950,7 @@ CREATE TABLE `galleries` (
 INSERT INTO `galleries` (`id`, `title`, `image`, `status`, `created`, `updated`) VALUES
 (11, NULL, 'Desert.jpg', 1, '2016-07-10 06:48:22', NULL),
 (14, NULL, 'Lighthouse.jpg', 1, '2017-10-15 09:43:05', NULL),
-(58, NULL, '07_preview.jpg', 1, '2017-12-24 09:52:33', NULL),
-(60, NULL, '02.jpg', 1, '2017-12-25 04:40:33', NULL),
-(59, NULL, '04.jpg', 1, '2017-12-24 10:06:12', NULL);
+(61, NULL, '01.jpg', 1, '2017-12-30 07:40:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -42011,11 +42009,58 @@ CREATE TABLE `pages` (
 --
 
 INSERT INTO `pages` (`id`, `title`, `slug`, `description`, `meta_keywords`, `meta_description`, `created`, `update`, `status`) VALUES
-(59, 'About us this is about us oage this is about us oage', 'about-us-this-is-about-us-oage-this-is-about-us-oage', '<p>this is about us owwwage</p>', '', '', '2017-12-03 13:16:40', '2017-12-23 05:32:05', 0),
-(60, 'Home', 'home', '<p>home pagessss</p>', '', '', '2017-12-03 13:18:36', '2017-12-23 05:31:53', 1),
-(61, 'Term And Conditions', 'term-and-conditions', '<p>lorem ipsum is simpl resr here</p>', '', '', '2017-12-09 09:29:12', NULL, 0),
+(59, 'About us this is about us oage this is about us oage', 'about-us-this-is-about-us-oage-this-is-about-us-oage', '<p>this is about us owwwage</p>', '', '', '2017-12-03 13:16:40', '2018-01-26 04:46:54', 1),
+(60, 'Home', 'home', '<p>home pagessss</p>', '', '', '2017-12-03 13:18:36', '2017-12-23 05:31:53', 0),
+(61, 'Term And Conditions', 'term-and-conditions', '<p>lorem ipsum is simpl resr here</p>', '', '', '2017-12-09 09:29:12', NULL, 1),
 (62, 'Term $ # &', 'term', '<p>this is term ans conditions page &amp;</p>', 'mmas, &', '', '2017-12-23 14:31:59', '2017-12-23 09:24:25', 1),
 (63, 'yguhg hg &', NULL, NULL, NULL, NULL, NULL, NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` int(11) NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `group` varchar(255) NOT NULL DEFAULT 'Unknown',
+  `order` int(11) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `key`, `name`, `group`, `order`) VALUES
+(1, 'page-index', 'Page Listing', 'Page', 1),
+(2, 'page-add', 'Page Create', 'Page', 2),
+(3, 'page-edit', 'Page Update', 'Page', 3),
+(4, 'page-delete', 'Page Delete', 'Page', 4),
+(5, 'event-add', 'Event Add', 'Event', 2),
+(6, 'event-edit', 'Event Edit', 'Event', 3),
+(7, 'event-index', 'Event Listing', 'Event', 1),
+(8, 'country-index', 'Country Listing', 'Country', 1),
+(9, 'country-add', 'Country Add', 'Country', 2),
+(10, 'country-edit', 'Country Edit', 'Country', 3),
+(11, 'city-index', 'City Listing', 'City', 1),
+(12, 'city-add', 'City Add', 'City', 2),
+(13, 'city-edit', 'City Edit', 'City', 3),
+(14, 'country-delete', 'Country Delete', 'Country', 4),
+(15, 'city-delete', 'City Delete', 'City', 4),
+(16, 'state-index', 'State Listing', 'State', 1),
+(17, 'state-add', 'State Add', 'State', 2),
+(18, 'state-edit', 'State Edit', 'State', 3),
+(19, 'state-delete', 'State Delete', 'State', 4),
+(20, 'gallery-all', 'Gallery Manager', 'Gallery', 1),
+(21, 'email_templates-index', 'Email Template Listing', 'Email Templates', 1),
+(22, 'email_templates-edit', 'Email Template Edit', 'Email Templates', 2),
+(23, 'email_templates-status', 'Email Template Manage Status', 'Email Templates', 3),
+(24, 'page-status', 'Page Status Change', 'Page', 5),
+(25, 'event-status', 'Event Status Change', 'Event', 5),
+(26, 'country-status', 'Country Status Change', 'Country', 5),
+(27, 'state-status', 'State Status Change', 'State', 5);
 
 -- --------------------------------------------------------
 
@@ -42191,12 +42236,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'admin', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', '41OxdsvwogkRPa7YoTUUku1b6c8113ad4e2f5ac2', 1508057752, NULL, 1268889823, 1514388407, 1, 'Admin', 'istrator', 'ADMIN', '0'),
+(1, '127.0.0.1', 'admin', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', '41OxdsvwogkRPa7YoTUUku1b6c8113ad4e2f5ac2', 1508057752, NULL, 1268889823, 1516963044, 1, 'Admin', 'istrator', 'ADMIN', '0'),
 (2, '127.0.0.1', 'benedmunds', '$2y$08$wQclqGSuDs6ha.ImfqjcDOp8H8M8HEKbTPDjv2CG1WRTOjGd9BCui', NULL, 'motilalsoni@gmail.com', NULL, NULL, NULL, NULL, 1514189309, NULL, 1, 'motilal', 'soni', NULL, '9024978491'),
-(3, '127.0.0.1', 'benedmunds', '$2y$08$X.wo1a1ctWWqF/tiLCx.wubIZsXlKjpxjZNsHwi0ooBkuxL1Muple', NULL, 'mohit@gmail.com', NULL, NULL, NULL, NULL, 1514189657, NULL, 1, 'Mohit', 'Soni', NULL, '123654789'),
-(5, '127.0.0.1', NULL, '$2y$08$RkW9FzddQUrtbpMzO6Z2gOqJyeT3EEEeaW8zf4fljnK6UaVShNKNu', NULL, 'pawanbamboli@gmail.com', NULL, NULL, NULL, NULL, 1514191227, NULL, 0, 'Pawan', 'Soni', NULL, '123654789'),
-(6, '127.0.0.1', NULL, '$2y$08$eD9CYEeOavPlAjb60r8GQuYFvfCtZCDbdMJ7QZwKDy81D2K8sWnUa', NULL, 'admisssn@admin.com', NULL, NULL, NULL, NULL, 1514191341, NULL, 1, 'Akhil &', 'sobi @', NULL, '2424324'),
-(7, '127.0.0.1', NULL, '$2y$08$Z59katmowlBxtKAcJ55Sueu3SUUGeeXVWPhBh77Lev/sE16owa2a2', NULL, 'soniya@gmail.com', NULL, NULL, NULL, NULL, 1514389698, NULL, 1, 'Soniya', 'soni', NULL, '123456789');
+(3, '127.0.0.1', 'benedmunds', '$2y$08$X.wo1a1ctWWqF/tiLCx.wubIZsXlKjpxjZNsHwi0ooBkuxL1Muple', NULL, 'mohit@gmail.com', NULL, NULL, NULL, NULL, 1514189657, 1516963170, 1, 'Mohit', 'Soni', NULL, '123654789'),
+(5, '127.0.0.1', NULL, '$2y$08$RkW9FzddQUrtbpMzO6Z2gOqJyeT3EEEeaW8zf4fljnK6UaVShNKNu', NULL, 'pawanbamboli@gmail.com', NULL, NULL, NULL, NULL, 1514191227, NULL, 1, 'Pawan', 'Soni', NULL, '123654789');
 
 -- --------------------------------------------------------
 
@@ -42219,9 +42262,51 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (2, 1, 2),
 (3, 2, 3),
 (4, 3, 3),
-(6, 5, 3),
-(7, 6, 3),
-(8, 7, 3);
+(6, 5, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_permissions`
+--
+
+CREATE TABLE `user_permissions` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_permissions`
+--
+
+INSERT INTO `user_permissions` (`id`, `user_id`, `permission_id`, `created`) VALUES
+(34, 5, 1, '2018-01-20 05:28:10'),
+(36, 5, 3, '2018-01-20 05:28:10'),
+(37, 5, 4, '2018-01-20 05:28:10'),
+(38, 5, 24, '2018-01-20 05:28:10'),
+(39, 5, 7, '2018-01-20 05:29:25'),
+(40, 5, 5, '2018-01-20 05:29:25'),
+(41, 5, 9, '2018-01-20 05:29:25'),
+(45, 2, 1, '2018-01-20 05:35:58'),
+(46, 2, 2, '2018-01-20 05:35:58'),
+(47, 2, 3, '2018-01-20 05:35:58'),
+(48, 2, 4, '2018-01-20 05:35:58'),
+(49, 2, 24, '2018-01-20 05:35:58'),
+(50, 2, 7, '2018-01-20 05:35:58'),
+(51, 2, 5, '2018-01-20 05:35:58'),
+(52, 2, 6, '2018-01-20 05:35:58'),
+(53, 2, 25, '2018-01-20 05:35:58'),
+(54, 5, 21, '2018-01-20 05:36:07'),
+(55, 5, 22, '2018-01-20 05:36:07'),
+(56, 5, 23, '2018-01-20 05:36:07'),
+(78, 3, 7, '2018-01-26 06:29:12'),
+(79, 3, 5, '2018-01-26 06:29:12'),
+(80, 3, 1, '2018-01-26 08:00:50'),
+(86, 3, 3, '2018-01-26 08:38:20'),
+(87, 3, 4, '2018-01-26 08:38:20'),
+(88, 3, 24, '2018-01-26 08:38:20');
 
 --
 -- Indexes for dumped tables
@@ -42286,6 +42371,12 @@ ALTER TABLE `pages`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `settings`
 --
 ALTER TABLE `settings`
@@ -42312,6 +42403,13 @@ ALTER TABLE `users_groups`
   ADD UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
   ADD KEY `fk_users_groups_users1_idx` (`user_id`),
   ADD KEY `fk_users_groups_groups1_idx` (`group_id`);
+
+--
+-- Indexes for table `user_permissions`
+--
+ALTER TABLE `user_permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -42341,7 +42439,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `galleries`
 --
 ALTER TABLE `galleries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -42356,7 +42454,12 @@ ALTER TABLE `login_attempts`
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `settings`
 --
@@ -42371,12 +42474,17 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `user_permissions`
+--
+ALTER TABLE `user_permissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 --
 -- Constraints for dumped tables
 --
@@ -42399,6 +42507,12 @@ ALTER TABLE `states`
 ALTER TABLE `users_groups`
   ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `user_permissions`
+--
+ALTER TABLE `user_permissions`
+  ADD CONSTRAINT `user_permissions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

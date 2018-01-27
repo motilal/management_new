@@ -31,10 +31,10 @@ class User_model extends CI_Model {
         $data = $this->db->get("users");
         if ($with_num_rows == true) {
             $num_rows = $this->db->select('users.id')
-                    ->join("users_groups as ug", "users.id = ug.user_id", "left")
-                    ->join("groups as grp", "ug.group_id = grp.id", "left")
-                    ->where(!empty($condition) ? $condition : 1, TRUE)
-                    ->get("users")->num_rows();
+                            ->join("users_groups as ug", "users.id = ug.user_id", "left")
+                            ->join("groups as grp", "ug.group_id = grp.id", "left")
+                            ->where(!empty($condition) ? $condition : 1, TRUE)
+                            ->get("users")->num_rows();
             return (object) array("data" => $data, "num_rows" => $num_rows);
         }
         return $data;
@@ -56,6 +56,31 @@ class User_model extends CI_Model {
             return $result->num_rows() > 0 ? $result->row() : null;
         }
         return false;
+    }
+
+    public function get_permissions() {
+        $result = $this->db->select("*")->order_by('order')->get("permissions");
+        return $result->num_rows() > 0 ? $result->result() : null;
+    }
+
+    public function get_userpermission_keys($condition = array()) {
+        $result = $this->db->select("p.key,p.group")
+                        ->join('permissions p', 'p.id=up.permission_id')
+                        ->where(!empty($condition) ? $condition : 1, TRUE)->get("user_permissions as up");
+        return $result->num_rows() > 0 ? $result->result() : null;
+    }
+
+    public function get_userpermissions($condition = array()) {
+        $result = $this->db->select("permission_id")->where(!empty($condition) ? $condition : 1, TRUE)->get("user_permissions");
+        return $result->num_rows() > 0 ? $result->result() : null;
+    }
+
+    public function check_user_permissions($key, $user_id) {
+        $permission = $this->db->select('id')->get_where('permissions', array('key' => $key))->row();
+        if (isset($permission->id)) {
+            $result = $this->db->select("permission_id")->where(array('permission_id' => $permission->id, 'user_id' => $user_id))->get("user_permissions");
+            return $result->num_rows() > 0 ? true : false;
+        }
     }
 
 }

@@ -14,6 +14,7 @@ class Permissions extends CI_Controller {
         parent::__construct();
         $this->site_santry->redirect = "admin";
         $this->site_santry->allow(array());
+        is_allow_admin(); 
         $this->layout->set_layout("admin/layout/layout_admin");
         $this->load->model(array("permission_model" => 'permission'));
     }

@@ -19,6 +19,7 @@ class Pages extends CI_Controller {
     }
 
     public function index() {
+        $this->acl->has_permission('page-index');
         $condition = array();
         $result = $this->page->get_list($condition);
         $this->viewData['result'] = $result;
@@ -33,6 +34,19 @@ class Pages extends CI_Controller {
     public function manage($id = null) {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('manage');
+        $this->viewData['title'] = "Add Static Page";
+        if ($id > 0) {
+            $this->acl->has_permission('page-edit');
+            $this->viewData['data'] = $data = $this->page->getById($id);
+            if (empty($data)) {
+                $this->session->set_flashdata("error", getLangText('LinkExpired'));
+                redirect('admin/pages');
+            }
+            $this->viewData['title'] = "Edit Static Page";
+        } else {
+            $this->acl->has_permission('page-add');
+        }
+
         if ($this->form_validation->run() === TRUE) {
             $data = array(
                 "title" => $this->input->post('title'),
@@ -56,15 +70,7 @@ class Pages extends CI_Controller {
             }
             redirect("admin/pages");
         }
-        $this->viewData['title'] = "Add Static Page";
-        if ($id > 0) {
-            $this->viewData['data'] = $data = $this->page->getById($id);
-            if (empty($data)) {
-                $this->session->set_flashdata("error", getLangText('LinkExpired'));
-                redirect('admin/pages');
-            }
-            $this->viewData['title'] = "Edit Static Page";
-        }
+
         $this->viewData['ckeditor_asset'] = true;
         $this->viewData['pageModule'] = 'Add New Page';
         $this->viewData['breadcrumb'] = array('Page Manager' => 'admin/pages', $this->viewData['title'] => '');
@@ -75,10 +81,15 @@ class Pages extends CI_Controller {
         $response = array();
         if ($this->input->is_ajax_request()) {
             $id = $this->input->post('id');
-            if ($id > 0 && $this->db->where("id", $id)->delete("pages")) {
-                $response['success'] = 'Page deleted successfully.';
+            $has_permission = $this->acl->has_permission('page-delete', FALSE);
+            if ($has_permission === TRUE) {
+                if ($id > 0 && $this->db->where("id", $id)->delete("pages")) {
+                    $response['success'] = 'Page deleted successfully.';
+                } else {
+                    $response['error'] = 'Invalid request';
+                }
             } else {
-                $response['error'] = 'Invalid request';
+                $response['error'] = $has_permission;
             }
         }
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
@@ -87,17 +98,22 @@ class Pages extends CI_Controller {
     public function changestatus() {
         $response = array();
         if ($this->input->is_ajax_request()) {
-            $id = $this->input->post('id');
-            $status = $this->input->post('status');
-            $pageaction = '';
-            if ($status == "1") {
-                $this->db->where("id", $id)->update("pages", array("status" => 0));
-                $pageaction = 'Inactive';
-            } else if ($status == "0") {
-                $this->db->where("id", $id)->update("pages", array("status" => 1));
-                $pageaction = 'Active';
+            $has_permission = $this->acl->has_permission('page-status', FALSE);
+            if ($has_permission === TRUE) {
+                $id = $this->input->post('id');
+                $status = $this->input->post('status');
+                $pageaction = '';
+                if ($status == "1") {
+                    $this->db->where("id", $id)->update("pages", array("status" => 0));
+                    $pageaction = 'Inactive';
+                } else if ($status == "0") {
+                    $this->db->where("id", $id)->update("pages", array("status" => 1));
+                    $pageaction = 'Active';
+                }
+                $response['success'] = "Page $pageaction Successfully.";
+            } else {
+                $response['error'] = $has_permission;
             }
-            $response['success'] = "Page $pageaction Successfully.";
         }
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
     }

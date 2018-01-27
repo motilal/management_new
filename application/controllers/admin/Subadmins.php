@@ -15,6 +15,7 @@ class Subadmins extends CI_Controller {
         parent::__construct();
         $this->site_santry->redirect = "admin";
         $this->site_santry->allow(array());
+        is_allow_admin(); 
         $this->layout->set_layout("admin/layout/layout_admin");
         $this->load->model(array('user_model' => 'user'));
         $this->viewData['pageModule'] = 'SubAdmin Manager';
@@ -64,7 +65,8 @@ class Subadmins extends CI_Controller {
                 $rowData[5] = $this->layout->element('admin/element/_module_status', array('status' => $row->active, 'id' => $row->id, 'url' => "admin/subadmins/changestatus"), true);
                 $editUrl = 'admin/subadmins/edit/' . $row->id;
                 $deleteUrl = 'admin/subadmins/delete';
-                $rowData[6] = $this->layout->element('admin/element/_module_action', array('id' => $row->id, 'editUrl' => $editUrl, 'deleteUrl' => $deleteUrl), true);
+                $permissionUrl = 'admin/subadmins/permissions/' . $row->id;
+                $rowData[6] = $this->layout->element('admin/element/_module_action', array('id' => $row->id, 'editUrl' => $editUrl, 'deleteUrl' => $deleteUrl, 'permissionUrl' => $permissionUrl), true);
                 $resultData[] = $rowData;
             }
         }
@@ -112,7 +114,7 @@ class Subadmins extends CI_Controller {
         if (empty($data)) {
             show_404();
         }
-        $this->viewData['title'] = "Edit SubAdmin";
+        $this->viewData['title'] = "Update Profile";
         $this->viewData['pageHeading'] = $this->viewData['title'];
         $this->viewData['breadcrumb'] = array('SubAdmin Manager' => 'admin/subadmins', $this->viewData['title'] => '');
         $this->layout->view("admin/subadmin/edit", $this->viewData);
@@ -129,6 +131,58 @@ class Subadmins extends CI_Controller {
             }
         }
         $this->output->set_content_type('application/json')->set_output(json_encode($response));
+    }
+
+    public function permissions($id = null) {
+        $this->load->library('form_validation');
+        if ($this->input->post()) {
+            $permission_array = $this->input->post('permission');
+            if (!empty($permission_array)) {
+                $user_id = $id;
+                $this->db->where('user_id', $user_id)->where_not_in('permission_id', $permission_array)->delete('user_permissions');
+
+                $exist_user_permissions = $this->db->select('permission_id')->where('user_id', $user_id)->where_in('permission_id', $permission_array)->get('user_permissions')->result_array();
+                $exist_permission = array();
+                if (!empty($exist_user_permissions)) {
+                    foreach ($exist_user_permissions as $value) {
+                        $exist_permission[] = $value['permission_id'];
+                    }
+                    $permission_array = array_diff($permission_array, $exist_permission);
+                }
+                foreach ($permission_array as $value) {
+                    $data[] = array(
+                        'user_id' => $user_id,
+                        'permission_id' => $value
+                    );
+                }
+                if (!empty($data)) {
+                    $this->db->insert_batch('user_permissions', $data);
+                }
+                $this->session->set_flashdata("success", 'Permission Update Success.');
+                redirect("admin/subadmins");
+            } else {
+                $this->db->where('user_id', $id)->delete('user_permissions');
+            }
+        }
+        $this->viewData['data'] = $data = $this->ion_auth->user($id)->row();
+        if (empty($data)) {
+            show_404();
+        }
+        $permission_data = $this->user->get_permissions();
+        $this->viewData['permission_data'] = $permission_group = arrayGrouping($permission_data, 'group');
+        $this->viewData['title'] = "Manage Permissions";
+
+        $u_per = $this->user->get_userpermissions(array('user_id' => $id));
+        $user_permissions = array();
+        if (!empty($u_per)) {
+            foreach ($u_per as $row) {
+                $user_permissions[] = $row->permission_id;
+            }
+        }
+        $this->viewData['user_permissions'] = $user_permissions;
+        $this->viewData['pageHeading'] = $this->viewData['title'];
+        $this->viewData['breadcrumb'] = array('SubAdmin Manager' => 'admin/subadmins', $this->viewData['title'] => '');
+        $this->layout->view("admin/subadmin/permissions", $this->viewData);
     }
 
     public function changestatus() {

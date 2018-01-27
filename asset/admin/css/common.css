@@ -65,3 +65,9 @@ a.add-cal-event:hover{
     float:left;
     width: 50%;
 }
+.nav-tabs-custom > .nav-tabs > li.header{
+    font-size: 18px;
+}
+.box-title label{
+    font-weight: normal;
+} 
